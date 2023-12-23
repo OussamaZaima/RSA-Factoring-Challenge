@@ -1,0 +1,41 @@
+#!/usr/bin/python3
+import sys
+import math
+
+
+def factorize(num):
+    if num % 2 == 0:
+        print(f"{num}={num // 2}*2")
+        return
+
+    if num % 3 == 0:
+        print(f"{num}={num // 3}*3")
+        return
+
+    sqrt_num = math.isqrt(num)
+    for i in range(5, sqrt_num + 1, 6):
+        if num % i == 0:
+            print(f"{num}={num // i}*{i}")
+            return
+        if num % (i + 2) == 0:
+            print(f"{num}={num // (i + 2)}*{i + 2}")
+            return
+
+    print(f"{num} is a prime number")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python factors.py <file>")
+        sys.exit(1)
+
+    filename = sys.argv[1]
+
+    try:
+        with open(filename, "r") as file:
+            for line in file:
+                n = int(line)
+                factorize(n)
+    except FileNotFoundError:
+        print("Error opening file")
+        sys.exit(1)
